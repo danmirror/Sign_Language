@@ -11,6 +11,29 @@ Proyek ini adalah sistem pengenalan bahasa isyarat secara real-time menggunakan 
 - **Output Teks dan Suara**: Kata yang terdeteksi ditampilkan di terminal dan diucapkan melalui fitur Text-to-Speech (TTS).
 - **Efisiensi CPU**: Model YOLOv11 Nano dioptimalkan untuk inferensi di CPU, memastikan performa baik tanpa GPU yang kuat.
 
+
+## Struktur Proyek
+```bash
+sign_language_project/
+├── Dataset/
+│   ├── images/
+│   │   ├── train/
+│   │   └── val/
+│   ├── labels/
+│   │   ├── train/
+│   │   └── val/
+│   └── dataset.yaml
+├── model/
+│   └── model_yolov11m/
+│       └── weights/
+│           └── best.pt
+
+├── training.py
+├── detect.py
+├── convert.py
+├── requirements-train.txt
+└── requirements-detect.txt
+```
 ## Teknologi yang Digunakan
 
 - **Model**: YOLOv11n (dilatih ulang dengan custom dataset)
@@ -128,28 +151,5 @@ Pengujian dilakukan di laptop dengan spesifikasi berikut:
 <img width="1920" height="1080" alt="Screenshot (1658)" src="https://github.com/user-attachments/assets/ce3db550-61e6-43bd-8be1-9302a884a260" />
 <img width="1920" height="1080" alt="Screenshot (1659)" src="https://github.com/user-attachments/assets/df40106f-f648-4400-9775-03d999309cb9" />
 
-
-## Struktur Proyek
-```bash
-sign_language_project/
-├── Dataset/
-│   ├── images/
-│   │   ├── train/
-│   │   └── val/
-│   ├── labels/
-│   │   ├── train/
-│   │   └── val/
-│   └── dataset.yaml
-├── model/
-│   └── model_yolov11m/
-│       └── weights/
-│           └── best.pt
-
-├── training.py
-├── detect.py
-├── convert.py
-├── requirements-train.txt
-└── requirements-detect.txt
-```
 
 Author :  [HAMDANDIH](https://github.com/dansecret)
