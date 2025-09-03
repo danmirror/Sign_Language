@@ -94,9 +94,9 @@ pip install -r reuirement-detect.txt
  
 Pelatihan dilakukan di laptop dengan spesifikasi berikut:
 
-- **Prosesor**: Intel Core i5-1135G7 @ 2.40GHz
+- **Prosesor**: Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz   2.90 GHz
 - **RAM**: 8GB DDR4
-- **GPU**: Integrated Intel Iris Xe (tanpa GPU NVIDIA)
+- **GPU**: NVIDIA GeForce RTX 3060
 - **OS**: Windows 11 64-bit
 - **Python**: 3.10 (virtualenv)
 
