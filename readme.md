@@ -122,9 +122,12 @@ Pengujian dilakukan di laptop dengan spesifikasi berikut:
 | YOLOv11x  | Terlalu berat tanpa GPU     |
 
 > ⚠️ FPS diukur saat menjalankan `detect.py` secara real-time menggunakan webcam internal. Tidak menggunakan GPU.
+<img width="1920" height="1080" alt="Screenshot (1660)" src="https://github.com/user-attachments/assets/9a678b9a-8d0e-4825-a7ff-cc1fe2c32d37" />
+<img width="1919" height="1079" alt="Screenshot 2025-09-03 132346" src="https://github.com/user-attachments/assets/1f98d585-a6e2-45e9-a0d2-11fe79e01cdb" />
+<img width="1920" height="1080" alt="Screenshot (1657)" src="https://github.com/user-attachments/assets/154b5a85-bda5-48a9-9899-9ce61043edf0" />
+<img width="1920" height="1080" alt="Screenshot (1658)" src="https://github.com/user-attachments/assets/ce3db550-61e6-43bd-8be1-9302a884a260" />
+<img width="1920" height="1080" alt="Screenshot (1659)" src="https://github.com/user-attachments/assets/df40106f-f648-4400-9775-03d999309cb9" />
 
-
-Nilai mAP50 yang mendekati 1.0 menunjukkan bahwa model ini memiliki akurasi yang sangat tinggi dalam mendeteksi isyarat tangan pada validasi.
 
 ## Struktur Proyek
 ```bash
