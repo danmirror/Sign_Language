@@ -2,30 +2,34 @@ import cv2
 from ultralytics import YOLO
 import pyttsx3
 import threading
+import time
 
 # Muat model YOLO yang sudah dilatih
-model = YOLO('model/yolov11s.pt')
+# Ganti 'path/to/your/best.pt' dengan lokasi model Anda
+model = YOLO('model/model_yolov11n/weights/best.pt')
 
 # Inisialisasi daftar nama kelas
 class_names = [
     'benar', 'bertemu', 'bis', 'coba', 'halo', 'kamu', 'kapan', 'kereta',
-    'maaf', 'makan', 'minum', 'mobil', 'motor', 'sama-sama', 'sekarang', 
+    'maaf', 'makan', 'minum', 'mobil', 'motor', 'sama-sama', 'sekarang',
     'semangat', 'telefon', 'terimakasih', 'tidur', 'toilet'
 ]
 
+# Inisialisasi mesin Text-to-Speech (TTS)
 engine = pyttsx3.init()
 engine.setProperty('rate', 150)
 engine.say("Aplikasi siap digunakan.")
 engine.runAndWait()
 
+# Kunci untuk sinkronisasi thread
 speak_lock = threading.Lock()
 
-# Fungsi untuk mengucapkan teks dengan kunci
 def speak(text):
     with speak_lock:
         engine.say(text)
         engine.runAndWait()
 
+# Buka stream kamera (0 untuk webcam default)
 cap = cv2.VideoCapture(1)
 
 if not cap.isOpened():
@@ -33,15 +37,26 @@ if not cap.isOpened():
     exit()
 
 print("Kamera berhasil dibuka. Tekan 'q' untuk keluar.")
-last_spoken_label = "" # Variabel untuk menghindari pengucapan berulang
+last_spoken_label = ""
+prev_time = 0 # Variabel untuk menyimpan waktu frame sebelumnya
 
 try:
     while True:
+        # Baca satu frame dari kamera
         ret, frame = cap.read()
         if not ret:
             print("Gagal mengambil frame dari kamera.")
             break
 
+        # --- Tambahan Kode untuk FPS ---
+        current_time = time.time()
+        fps = 1 / (current_time - prev_time)
+        prev_time = current_time
+        fps_text = f"FPS: {fps:.2f}"
+        cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        # --- Akhir Tambahan Kode ---
+
+        # Lakukan inferensi (deteksi) pada frame
         results = model.predict(source=frame, conf=0.6, verbose=False, device='cpu')
         
         detected_labels = []
@@ -64,7 +79,6 @@ try:
             current_label = max(set(detected_labels), key=detected_labels.count)
             if current_label != last_spoken_label:
                 print(f"Terdeteksi: {current_label}")
-                # Jalankan pengucapan di thread baru
                 threading.Thread(target=speak, args=(current_label,)).start()
                 last_spoken_label = current_label
         else:
@@ -78,3 +92,7 @@ try:
 finally:
     cap.release()
     cv2.destroyAllWindows()
+    try:
+        engine.stop()
+    except Exception:
+        pass
