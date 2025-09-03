@@ -31,8 +31,7 @@ sign_language_project/
 ├── training.py
 ├── detect.py
 ├── convert.py
-├── requirements-train.txt
-└── requirements-detect.txt
+├── requirements.txt
 ```
 ## Teknologi yang Digunakan
 
@@ -64,13 +63,9 @@ myenv\Scripts\activate  # Windows
 # source myenv/bin/activate  # Linux/MacOS
 ```
 Tergantung pada kebutuhan Anda, instal dependensi yang sesuai
-- Untuk Melatih model (Training) saya menggunakan ini :
+- Untuk Melatih model (Training) dan menjalankan model detect saya menggunakan ini :
 ```bash
-pip install -r reuirement-train.txt
-```
-- Untuk Melatih Deteksi (Inference) uji coba saya menggunakan ini :
-```bash
-pip install -r reuirement-detect.txt
+pip install -r requirement.txt
 ```
 
 
