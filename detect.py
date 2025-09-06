@@ -10,6 +10,11 @@ class_names = [
     'bis', 'halo', 'kapan', 'maaf', 'makan', 'minum', 'sama-sama', 'semangat', 'telfon', 'terimakasih',
 ]
 
+THRESHOLD_SAFE = 7
+counter_safety = 0
+safety_label = "none"
+
+
 # Inisialisasi Text-to-Speech (TTS)
 engine = pyttsx3.init()
 engine.setProperty('rate', 150)
@@ -25,7 +30,7 @@ def speak(text):
         engine.runAndWait()
 
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 if not cap.isOpened():
     print("Error: Tidak bisa membuka stream kamera.")
@@ -33,7 +38,7 @@ if not cap.isOpened():
 
 print("Kamera berhasil dibuka. Tekan 'q' untuk keluar.")
 last_spoken_label = ""
-prev_time =
+prev_time = 0
 
 try:
     while True:
@@ -73,12 +78,23 @@ try:
 
             current_label = class_names[class_id]
             if current_label != last_spoken_label:
-                print(f"Terdeteksi: {current_label}")
-                if not engine.isBusy():
-                    threading.Thread(target=speak, args=(current_label,)).start()
-                last_spoken_label = current_label
+                counter_safety +=1
+
+                if safety_label != class_names[class_id]:
+                    safety_label = class_names[class_id]
+                    counter_safety = 0
+
+
+                print(f"Terdeteksi: {current_label}, counter_safety: {counter_safety}")
+                if(counter_safety > THRESHOLD_SAFE):
+                    if not engine.isBusy():
+                        threading.Thread(target=speak, args=(current_label,)).start()
+                    last_spoken_label = current_label
+
         else:
             last_spoken_label = ""
+            counter_safety = 0
+
 
 
         cv2.imshow('Real-time Sign Language Detection', frame)

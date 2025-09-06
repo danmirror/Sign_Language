@@ -1,2 +1,6 @@
-Dataset/
-model/
+Dataset/*
+model/*
+
+
+!*/.gitkeep
+!Dataset/dataset.yaml
