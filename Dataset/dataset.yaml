@@ -1,0 +1,16 @@
+path: C:\yolov11\Dataset
+train: images
+val: images
+test: images
+
+names:
+    0: bis
+    1: halo
+    2: kapan
+    3: maaf
+    4: makan
+    5: minum
+    6: sama-sama
+    7: semangat
+    8: telfon
+    9: terimakasih
