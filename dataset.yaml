@@ -1,27 +1,16 @@
-# dataset.yaml
 path: C:\yolov11\Dataset
 train: images
 val: images
 test: images
 
 names:
-    0: benar
-    1: bertemu
-    2: bis
-    3: coba
-    4: halo
-    5: kamu
-    6: kapan
-    7: kereta
-    8: maaf
-    9: makan
-    10: minum
-    11: mobil
-    12: motor
-    13: sama-sama
-    14: sekarang
-    15: semangat
-    16: telfon
-    17: terimakasih
-    18: tidur
-    19: toilet
+    0: bis
+    1: halo
+    2: kapan
+    3: maaf
+    4: makan
+    5: minum
+    6: sama-sama
+    7: semangat
+    8: telfon
+    9: terimakasih

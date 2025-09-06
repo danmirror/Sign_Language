@@ -108,11 +108,7 @@ Model ini dilatih selama 100 epoch dan mencapai metrik berikut:
 
 | Model          | mAP50(B)          |mAP 50-90      |
 |----------------|-------------------|---------------|
-| [YOLO11n](https://drive.google.com/drive/folders/1igH2g6rC4kupeYrRv4M63ipEvwhTqbxH?usp=sharing)  | 0.99495               | 0.94403          |
-| [YOLO11s](https://drive.google.com/drive/folders/1RA6GSKWcQ9-U5al4ZRqR6qAyPlwHMzwA?usp=sharing)  | 0.99500               | 0.95843          |
-| [YOLO11m](https://drive.google.com/drive/folders/1vlH1LevOJnmfSrc_HuZbyL2gmOvze0Rn?usp=sharing)  | 0.99500               | 0.96327          |
-| [YOLO11l](https://drive.google.com/drive/folders/1NvdmNEeRLTnoM2sTLcvsvz7QMCPQMvZP?usp=sharing)  | 0.99500               | 0.95676          |
-| [YOLO11x](https://drive.google.com/drive/folders/1TKhX1cRTSHjs4Yd5_QKKy4A_5oybQ5f-?usp=sharing)  | 0.99500               | 0.96327          |
+| [YOLO11n](https://drive.google.com/file/d/12cQdM6pkcbW1nOa4qrh55djw0ngZVKqj/view?usp=sharing)  | 0.99495               | 0.94403          |
 
 ### Menjalankan Deteksi Real-time
 Setelah training selesai dan model best.pt sudah dihasilkan, jalankan skrip detect.py untuk memulai deteksi dari kamera. Pastikan Anda berada di lingkungan dengan dependensi inference.
