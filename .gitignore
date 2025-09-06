@@ -1,2 +1,5 @@
-Dataset/
-model/
+Dataset/*
+model/*
+
+
+!*/.gitkeep
