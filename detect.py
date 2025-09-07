@@ -4,6 +4,19 @@ import pyttsx3
 import threading
 import time
 
+import socket
+import json
+import time
+import random
+
+# --- Konfigurasi UDP ---
+UDP_IP = "103.151.141.219" 
+UDP_PORT_VIDEO = 4000
+UDP_PORT_DATA = 5000
+
+sock_video = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock_data = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
 model = YOLO('model/model_yolov11n/weights/best.pt')
 
 class_names = [
@@ -12,7 +25,9 @@ class_names = [
 
 THRESHOLD_SAFE = 7
 counter_safety = 0
+clases_detection = "none"
 safety_label = "none"
+is_detection = False
 
 
 # Inisialisasi Text-to-Speech (TTS)
@@ -59,6 +74,8 @@ try:
         best_box = None
         best_confidence = 0.0
 
+       
+
         for result in results:
             boxes = result.boxes
             for box in boxes:
@@ -87,13 +104,40 @@ try:
 
                 print(f"Terdeteksi: {current_label}, counter_safety: {counter_safety}")
                 if(counter_safety > THRESHOLD_SAFE):
+                    is_detection = True
+                    clases_detection = class_names[class_id]
+
                     if not engine.isBusy():
                         threading.Thread(target=speak, args=(current_label,)).start()
                     last_spoken_label = current_label
-
+            
+                
+                
         else:
             last_spoken_label = ""
             counter_safety = 0
+
+        # encode ke JPEG
+        ret, buf = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 25])
+        if not ret:
+            continue
+        data_frame = buf.tobytes()
+
+        MAX_UDP_PACKET = 60000
+        for i in range(0, len(data_frame), MAX_UDP_PACKET):
+            chunk = data_frame[i:i+MAX_UDP_PACKET]
+            sock_video.sendto(chunk, (UDP_IP, UDP_PORT_VIDEO))
+        
+        # buat data dummy 4 angka sensor
+        sensor_data = {
+            "val1": is_detection,
+            "val2": clases_detection,
+            "val3": counter_safety,
+            "val4": THRESHOLD_SAFE,
+        }
+
+        # kirim JSON ke server Go
+        sock_data.sendto(json.dumps(sensor_data).encode(), (UDP_IP, UDP_PORT_DATA))
 
 
 
