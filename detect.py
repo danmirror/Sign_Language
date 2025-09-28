@@ -8,9 +8,10 @@ import socket
 import json
 import time
 import random
+import struct
 
 # --- Konfigurasi UDP ---
-UDP_IP = "103.151.141.219" 
+UDP_IP = "127.0.0.1"
 UDP_PORT_VIDEO = 4000
 UDP_PORT_DATA = 5000
 
@@ -61,6 +62,7 @@ try:
         if not ret:
             print("Gagal mengambil frame dari kamera.")
             break
+        frame = cv2.resize(frame, (640, 480))
 
         current_time = time.time()
         fps = 1 / (current_time - prev_time)
@@ -123,10 +125,16 @@ try:
             continue
         data_frame = buf.tobytes()
 
-        MAX_UDP_PACKET = 60000
-        for i in range(0, len(data_frame), MAX_UDP_PACKET):
-            chunk = data_frame[i:i+MAX_UDP_PACKET]
-            sock_video.sendto(chunk, (UDP_IP, UDP_PORT_VIDEO))
+        MAX_UDP_PACKET = 4096  # aman untuk macOS
+        total_chunks = (len(data_frame) + MAX_UDP_PACKET - 1) // MAX_UDP_PACKET
+
+        for i in range(total_chunks):
+            chunk = data_frame[i*MAX_UDP_PACKET:(i+1)*MAX_UDP_PACKET]
+
+            # Header: (frame_id, chunk_index, total_chunks)
+            header = struct.pack("!HHH", 0, i, total_chunks)  
+            # ! = network byte order, H = 2-byte unsigned short
+            sock_video.sendto(header + chunk, (UDP_IP, UDP_PORT_VIDEO))
         
         # buat data dummy 4 angka sensor
         sensor_data = {
